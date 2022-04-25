@@ -527,6 +527,11 @@
     </dependency>
     <dependency>
       <groupId>com.google.cloud.bigdataoss</groupId>
+      <artifactId>util-hadoop</artifactId>
+      <version>${gcs.connector.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.cloud.bigdataoss</groupId>
       <artifactId>gcs-connector</artifactId>
       <version>${gcs.connector.version}</version>
     </dependency>
