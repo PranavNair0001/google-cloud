@@ -119,6 +119,20 @@ public class GCSDelete implements E2EHelper {
     BeforeActions.scenario.write("Multiple objects deleted successfully by GCS Delete plugin.");
   }
 
+  @Then("Verify objects {string} still exist after GCS Delete action plugin")
+  public void verifyObjectsExistByGCSDeleteActionPlugin(String commaSeparatedObjectsList)
+    throws IOException {
+    String[] objectsToDelete = PluginPropertyUtils.pluginProp(commaSeparatedObjectsList).split(",");
+    for (int index = 0; index < objectsToDelete.length; index++) {
+      Blob gcsObject = StorageClient.getObjectMetadata(TestSetupHooks.gcsSourceBucketName, objectsToDelete[index]);
+      if (gcsObject == null) {
+        Assert.fail("GCS object " + TestSetupHooks.gcsSourceBucketName + "/" + objectsToDelete[index]
+                      + " is deleted by GCS Delete plugin.");
+      }
+    }
+    BeforeActions.scenario.write("Multiple objects deleted successfully by GCS Delete plugin.");
+  }
+
   @Then("Enter the GCS Delete property {string} as macro argument {string}")
   public void enterTheGCSDeletePropertyAsMacroArgument(String pluginProperty, String macroArgument) {
     enterPropertyAsMacroArgument(pluginProperty, macroArgument);
