@@ -2,7 +2,7 @@ name: release-to-maven-central
 on: workflow_dispatch
 jobs:
   release-job:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
       with:
