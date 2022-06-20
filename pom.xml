@@ -685,7 +685,7 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
@@ -779,26 +779,14 @@
             </configuration>
           </plugin>
 
-<!--          <plugin>-->
-<!--            <groupId>org.sonatype.plugins</groupId>-->
-<!--            <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--            <version>1.6.2</version>-->
-<!--            <extensions>true</extensions>-->
-<!--            <configuration>-->
-<!--              <nexusUrl>https://oss.sonatype.org</nexusUrl>-->
-<!--              <serverId>sonatype.release</serverId>-->
-<!--            </configuration>-->
-<!--          </plugin>-->
-
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
+            <version>1.6.2</version>
             <extensions>true</extensions>
             <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <nexusUrl>https://oss.sonatype.org</nexusUrl>
+              <serverId>sonatype.release</serverId>
             </configuration>
           </plugin>
         </plugins>
