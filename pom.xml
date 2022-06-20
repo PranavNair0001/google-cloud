@@ -18,13 +18,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.cdap.plugin</groupId>
+  <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
   <version>0.15.2</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
-  <url>https://github.com/data-integrations/google-cloud</url>
+  <url>https://github.com/PranavNair0001/google-cloud</url>
 
   <licenses>
     <license>
@@ -37,17 +37,17 @@
 
   <developers>
     <developer>
-      <name>CDAP</name>
-      <email>cdap-dev@googlegroups.com</email>
-      <organization>CDAP</organization>
-      <organizationUrl>http://cdap.io</organizationUrl>
+      <name>Pranav Nair</name>
+      <email>pranavnair@google.com</email>
+      <organization>Google</organization>
+      <organizationUrl>http://google.com</organizationUrl>
     </developer>
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/data-integrations/google-cloud.git</connection>
-    <developerConnection>scm:git:git@github.com:data-integrations/google-cloud.git</developerConnection>
-    <url>https://github.com/data-integrations/google-cloud.git</url>
+    <connection>scm:git:https://github.com/PranavNair0001/google-cloud.git</connection>
+    <developerConnection>scm:git:git@github.com:PranavNair0001/google-cloud.git</developerConnection>
+    <url>https://github.com/PranavNair0001/google-cloud.git</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -645,6 +645,19 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 
@@ -702,13 +715,18 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <configuration>
-              <passphrase>${gpg.passphrase}</passphrase>
-              <useAgent>${gpg.useagent}</useAgent>
+              <!-- Prevent gpg from using pinentry programs -->
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
             </configuration>
             <executions>
               <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
                 </goals>
