@@ -1,18 +1,15 @@
 name: release-to-maven-central
-on: 
-  push:
-    tags:
-    - '*'
+on: workflow_dispatch
 jobs:
   release-job:
     runs-on: self-hosted
     steps:
-    - name: Get tag name
-      id: get_tag_name
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+#     - name: Get tag name
+#       id: get_tag_name
+#       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - uses: actions/checkout@v2
       with:
-        ref: ${{ steps.get_tag_name.outputs.VERSION }}
+        ref: v0.19.0.15
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
