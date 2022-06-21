@@ -20,7 +20,7 @@
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.21.0</version>
+  <version>0.19.0</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -757,39 +757,25 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
             <version>2.2.1</version>
-            <configuration>
-              <excludeResources>true</excludeResources>
-            </configuration>
             <executions>
               <execution>
                 <id>attach-sources</id>
-                <phase>package</phase>
                 <goals>
                   <goal>jar-no-fork</goal>
                 </goals>
               </execution>
             </executions>
           </plugin>
-
-          <!-- Javadoc jar -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
             <version>2.9.1</version>
             <configuration>
               <additionalparam>-Xdoclint:none</additionalparam>
-              <links>
-                <link>http://download.oracle.com/javase/${jee.version}/docs/api/</link>
-              </links>
-              <doctitle>${project.name} ${project.version}</doctitle>
-              <bottom>
-                <![CDATA[Copyright &#169; {currentYear} <a href="http://cdap.io" target="_blank">CDAP</a> Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License, Version 2.0</a>.]]>
-              </bottom>
             </configuration>
             <executions>
               <execution>
-                <id>attach-javadoc</id>
-                <phase>package</phase>
+                <id>attach-javadocs</id>
                 <goals>
                   <goal>jar</goal>
                 </goals>
@@ -839,7 +825,7 @@
             <version>1.6.2</version>
             <extensions>true</extensions>
             <configuration>
-              <nexusUrl>https://oss.sonatype.org</nexusUrl>
+              <nexusUrl>https://s01.oss.sonatype.org</nexusUrl>
               <serverId>sonatype.release</serverId>
             </configuration>
           </plugin>
