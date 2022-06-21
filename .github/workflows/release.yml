@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: v0.19.0.11
+        ref: v0.19.0.12
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
@@ -26,7 +26,9 @@ jobs:
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
     - name: Publish to Apache Maven Central
-      run: mvn -DskipTests clean deploy -P release -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+      run: |
+        mvn -DskipTests clean deploy -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        mvn -DskipTests clean deploy -P release -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
       env:
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
