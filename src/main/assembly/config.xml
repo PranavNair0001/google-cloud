@@ -1,0 +1,19 @@
+<assembly>
+  <formats>
+    <format>dir</format>
+    <format>tar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <files>
+    <file>
+      <source>target/${project.artifactId}-${project.version}.jar</source>
+      <destName>${project.artifactId}-${project.version}.jar</destName>
+      <filtered>true</filtered>
+    </file>
+    <file>
+      <source>target/${project.artifactId}-${project.version}.json</source>
+      <destName>${project.artifactId}-${project.version}.json</destName>
+      <filtered>true</filtered>
+    </file>
+  </files>
+</assembly>

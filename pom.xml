@@ -20,7 +20,7 @@
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.19.0</version>
+  <version>0.19.0.1</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -743,6 +743,22 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>hub-release-archive</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptor>src/main/assembly/config.xml</descriptor>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 
@@ -782,6 +798,23 @@
               </execution>
             </executions>
           </plugin>
+
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>hub-release-archive</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <descriptor>src/main/assembly/config.xml</descriptor>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
 
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
