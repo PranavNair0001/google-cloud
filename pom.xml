@@ -20,7 +20,7 @@
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.19.0.7</version>
+  <version>0.19.0.8</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -738,19 +738,23 @@
       </plugin>
 
       <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.3.0</version>
         <executions>
           <execution>
-            <id>additional-files-deploy</id>
-            <phase>deploy</phase>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
             <goals>
-              <goal>deploy-file</goal>
+              <goal>attach-artifact</goal>
             </goals>
-            <inherited>false</inherited>
             <configuration>
-              <file>target/${project.artifactId}-${project.version}.json</file>
-              <generatePom>false</generatePom>
-              <repositoryId>ossrh</repositoryId>
+              <artifacts>
+                <artifact>
+                  <file>target/${project.artifactId}-${project.version}.json</file>
+                  <type>extension of your file </type>
+                </artifact>
+              </artifacts>
             </configuration>
           </execution>
         </executions>
@@ -839,19 +843,23 @@
           </plugin>
 
           <plugin>
-            <artifactId>maven-deploy-plugin</artifactId>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.3.0</version>
             <executions>
               <execution>
-                <id>additional-files-deploy</id>
-                <phase>deploy</phase>
+                <id>attach-artifacts</id>
+                <phase>package</phase>
                 <goals>
-                  <goal>deploy-file</goal>
+                  <goal>attach-artifact</goal>
                 </goals>
-                <inherited>false</inherited>
                 <configuration>
-                  <file>target/${project.artifactId}-${project.version}.json</file>
-                  <generatePom>false</generatePom>
-                  <repositoryId>ossrh</repositoryId>
+                  <artifacts>
+                    <artifact>
+                    <file>target/${project.artifactId}-${project.version}.json</file>
+                    <type>extension of your file </type>
+                    </artifact>
+                  </artifacts>
                 </configuration>
               </execution>
             </executions>
