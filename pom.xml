@@ -720,28 +720,6 @@
         </executions>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
-        <configuration>
-          <!-- Prevent gpg from using pinentry programs -->
-          <gpgArguments>
-            <arg>--pinentry-mode</arg>
-            <arg>loopback</arg>
-          </gpgArguments>
-        </configuration>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-
-          </execution>
-        </executions>
-      </plugin>
 
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -777,6 +755,30 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <configuration>
+          <!-- Prevent gpg from using pinentry programs -->
+          <gpgArguments>
+            <arg>--pinentry-mode</arg>
+            <arg>loopback</arg>
+          </gpgArguments>
+        </configuration>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+
+          </execution>
+        </executions>
+      </plugin>
+
 
 
     </plugins>
@@ -819,6 +821,7 @@
             </executions>
           </plugin>
 
+
           <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <executions>
@@ -830,6 +833,25 @@
                 </goals>
                 <configuration>
                   <descriptor>src/main/assembly/config.xml</descriptor>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <version>2.8.2</version>
+            <executions>
+              <execution>
+                <id>deploy-file</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>deploy-file</goal>
+                </goals>
+                <configuration>
+                  <file>target/${project.artifactId}-${project.version}.json</file>
+                  <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+                  <repositoryId>ossrh</repositoryId>
                 </configuration>
               </execution>
             </executions>
