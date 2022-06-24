@@ -739,17 +739,17 @@
 
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.2</version>
         <executions>
           <execution>
-            <id>deploy-file</id>
+            <id>additional-files-deploy</id>
             <phase>deploy</phase>
             <goals>
               <goal>deploy-file</goal>
             </goals>
+            <inherited>false</inherited>
             <configuration>
               <file>target/${project.artifactId}-${project.version}.json</file>
-              <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+              <generatePom>false</generatePom>
               <repositoryId>ossrh</repositoryId>
             </configuration>
           </execution>
@@ -840,23 +840,22 @@
 
           <plugin>
             <artifactId>maven-deploy-plugin</artifactId>
-            <version>2.8.2</version>
             <executions>
               <execution>
-                <id>deploy-file</id>
+                <id>additional-files-deploy</id>
                 <phase>deploy</phase>
                 <goals>
                   <goal>deploy-file</goal>
                 </goals>
+                <inherited>false</inherited>
                 <configuration>
                   <file>target/${project.artifactId}-${project.version}.json</file>
-                  <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+                  <generatePom>false</generatePom>
                   <repositoryId>ossrh</repositoryId>
                 </configuration>
               </execution>
             </executions>
           </plugin>
-
 
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
