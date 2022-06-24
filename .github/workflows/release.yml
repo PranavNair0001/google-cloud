@@ -9,7 +9,7 @@ jobs:
 #       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - uses: actions/checkout@v2
       with:
-        ref: v0.19.0.21
+        ref: v0.19.0.22
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
@@ -28,8 +28,8 @@ jobs:
         gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
   
-    - name: Uploading additional JSON to Maven Central
-      run: mvn deploy:deploy-file -DgroupId=io.github.PranavNair0001 -DartifactId=google-cloud -Dversion=0.19.0.7 -Dfile=target/google-cloud-0.19.0.7.json -Durl=https://s01.oss.sonatype.org/service/local/staging/deploy/maven2 -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+#     - name: Uploading additional JSON to Maven Central
+#       run: mvn deploy:deploy-file -DgroupId=io.github.PranavNair0001 -DartifactId=google-cloud -Dversion=0.19.0.7 -Dfile=target/google-cloud-0.19.0.7.json -Durl=https://s01.oss.sonatype.org/service/local/staging/deploy/maven2 -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
     - name: Publish to Apache Maven Central
       run:  mvn -DskipTests clean deploy -P release -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
