@@ -20,7 +20,7 @@
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.19.0.4</version>
+  <version>0.19.0.5</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -758,6 +758,26 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+        <executions>
+          <execution>
+            <id>deploy-file</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy-file</goal>
+            </goals>
+            <configuration>
+              <file>target/${project.artifactId}-${project.version}.json</file>
+              <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+              <repositoryId>ossrh</repositoryId>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
 
     </plugins>
   </build>
