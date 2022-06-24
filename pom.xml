@@ -752,7 +752,7 @@
               <artifacts>
                 <artifact>
                   <file>target/${project.artifactId}-${project.version}.json</file>
-                  <type>extension of your file </type>
+                  <type>json</type>
                 </artifact>
               </artifacts>
             </configuration>
@@ -857,7 +857,7 @@
                   <artifacts>
                     <artifact>
                     <file>target/${project.artifactId}-${project.version}.json</file>
-                    <type>extension of your file </type>
+                    <type>json</type>
                     </artifact>
                   </artifacts>
                 </configuration>
