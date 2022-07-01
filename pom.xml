@@ -15,12 +15,12 @@
   ~ the License.
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.21.0-SNAPSHOT</version>
+  <version>0.19.0.8-SNAPSHOT</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -57,12 +57,12 @@
 
   <distributionManagement>
     <repository>
-      <id>sonatype.release</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
-      <id>sonatype.snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -72,8 +72,8 @@
     <avro.version>1.8.2</avro.version>
     <bigquery.connector.hadoop2.version>hadoop2-1.0.0</bigquery.connector.hadoop2.version>
     <commons.codec.version>1.4</commons.codec.version>
-    <cdap.version>6.8.0-SNAPSHOT</cdap.version>
-    <cdap.plugin.version>2.10.0-SNAPSHOT</cdap.plugin.version>
+    <cdap.version>6.5.0</cdap.version>
+    <cdap.plugin.version>2.7.0</cdap.plugin.version>
     <dropwizard.metrics-core.version>3.2.6</dropwizard.metrics-core.version>
     <flogger.system.backend.version>0.3.1</flogger.system.backend.version>
     <gcs.connector.version>hadoop2-2.0.0</gcs.connector.version>
@@ -85,21 +85,18 @@
     <google.cloud.speech.version>1.24.7</google.cloud.speech.version>
     <google.cloud.storage.version>1.118.0</google.cloud.storage.version>
     <google.cloud.datastore.version>1.105.1</google.cloud.datastore.version>
-    <google.protobuf.java.version>3.19.4</google.protobuf.java.version>
+    <google.protobuf.java.version>3.13.0</google.protobuf.java.version>
     <google.tink.version>1.3.0-rc3</google.tink.version>
     <guava.version>27.0.1-jre</guava.version>
     <hadoop.version>2.9.2</hadoop.version>
     <hbase-shaded-client.version>1.4.13</hbase-shaded-client.version>
     <hbase-shaded-server.version>1.4.13</hbase-shaded-server.version>
-    <httpclient.version>4.5.13</httpclient.version>
+    <httpclient.version>4.5.6</httpclient.version>
     <jackson.core.version>2.8.11.1</jackson.core.version>
     <junit.version>4.13.1</junit.version>
     <powermock.version>2.0.2</powermock.version>
     <slf4j.version>1.7.5</slf4j.version>
     <spark.version>2.3.1</spark.version>
-    <spark3.version>3.1.1</spark3.version>
-    <spark-bq-connector.version>0.23.1</spark-bq-connector.version>
-    <testSourceLocation>${project.basedir}/src/test/java/</testSourceLocation>
   </properties>
 
   <dependencyManagement>
@@ -141,115 +138,6 @@
   </repositories>
 
   <dependencies>
-    <!-- Start: dependency used by the Dataplex connector -->
-    <dependency>
-      <groupId>org.awaitility</groupId>
-      <artifactId>awaitility</artifactId>
-      <version>3.1.6</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api</groupId>
-      <artifactId>gax</artifactId>
-      <version>2.12.2</version>
-      <scope>compile</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>api-common</artifactId>
-          <groupId>com.google.api</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>google-auth-library-credentials</artifactId>
-          <groupId>com.google.auth</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>threetenbp</artifactId>
-          <groupId>org.threeten</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>google-auth-library-oauth2-http</artifactId>
-          <groupId>com.google.auth</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jsr305</artifactId>
-          <groupId>com.google.code.findbugs</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>guava</artifactId>
-          <groupId>com.google.guava</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>opencensus-api</artifactId>
-          <groupId>io.opencensus</groupId>
-        </exclusion>
-      </exclusions>
-      <optional>false</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.google.api</groupId>
-      <artifactId>gax-grpc</artifactId>
-      <version>2.12.2</version>
-      <scope>compile</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>gax</artifactId>
-          <groupId>com.google.api</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>api-common</artifactId>
-          <groupId>com.google.api</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>proto-google-common-protos</artifactId>
-          <groupId>com.google.api.grpc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>google-auth-library-credentials</artifactId>
-          <groupId>com.google.auth</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>guava</artifactId>
-          <groupId>com.google.guava</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>grpc-api</artifactId>
-          <groupId>io.grpc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>threetenbp</artifactId>
-          <groupId>org.threeten</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>google-auth-library-oauth2-http</artifactId>
-          <groupId>com.google.auth</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jsr305</artifactId>
-          <groupId>com.google.code.findbugs</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>grpc-auth</artifactId>
-          <groupId>io.grpc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>grpc-netty-shaded</artifactId>
-          <groupId>io.grpc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>grpc-protobuf</artifactId>
-          <groupId>io.grpc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>grpc-stub</artifactId>
-          <groupId>io.grpc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>grpc-xds</artifactId>
-          <groupId>io.grpc</groupId>
-        </exclusion>
-      </exclusions>
-      <optional>false</optional>
-    </dependency>
-    <!-- End: dependency used by the Dataplex connector -->
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
@@ -270,11 +158,6 @@
           <artifactId>avro</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.cdap.cdap</groupId>
-      <artifactId>cdap-features</artifactId>
-      <version>${cdap.version}</version>
     </dependency>
     <dependency>
       <groupId>io.cdap.cdap</groupId>
@@ -371,12 +254,6 @@
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-shaded-client</artifactId>
       <version>${hbase-shaded-client.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <!--
@@ -387,12 +264,6 @@
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-shaded-server</artifactId>
       <version>${hbase-shaded-server.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.dropwizard.metrics</groupId>
@@ -693,57 +564,10 @@
       <artifactId>httpclient</artifactId>
       <version>${httpclient.version}</version>
     </dependency>
-    <!-- Start: dependencies used by the Spark-BigQuery connector -->
-    <dependency>
-      <groupId>io.cdap.cdap</groupId>
-      <artifactId>cdap-etl-api-spark</artifactId>
-      <version>${cdap.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.cdap.cdap</groupId>
-      <artifactId>cdap-api-spark2_2.11</artifactId>
-      <version>${cdap.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.cloud.spark</groupId>
-      <artifactId>spark-bigquery-with-dependencies_2.12</artifactId>
-      <version>${spark-bq-connector.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql_2.12</artifactId>
-      <version>${spark3.version}</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <!-- End: dependencies used by the Spark-BigQuery connector -->
-    <!-- Start: dependency used by the Dataplex connector -->
-    <dependency>
-      <groupId>com.google.cloud</groupId>
-      <artifactId>google-cloud-dataplex</artifactId>
-      <version>0.2.0</version>
-    </dependency>
-    <!-- End: dependency used by the Dataplex connector -->
+
   </dependencies>
 
   <build>
-    <testSourceDirectory>${testSourceLocation}</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -760,10 +584,6 @@
               <consoleOutput>true</consoleOutput>
               <failsOnError>true</failsOnError>
               <includeTestSourceDirectory>true</includeTestSourceDirectory>
-              <testSourceDirectories>
-                <testSourceDirectory>src/test/java</testSourceDirectory>
-                <testSourceDirectory>src/e2e-test/java</testSourceDirectory>
-              </testSourceDirectories>
             </configuration>
             <goals>
               <goal>check</goal>
@@ -824,7 +644,6 @@
               org.apache.spark.streaming.pubsub*;
               org.apache.hadoop.hbase.mapreduce.*;
               org.apache.hadoop.hbase.security.token.*;
-              com.google.cloud.spark.bigquery.*;
             </_exportcontents>
           </instructions>
         </configuration>
@@ -844,8 +663,8 @@
         <version>1.1.0</version>
         <configuration>
           <cdapArtifacts>
-            <parent>system:cdap-data-pipeline[6.7.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
-            <parent>system:cdap-data-streams[6.7.0-SNAPSHOT,7.0.0-SNAPSHOT)</parent>
+            <parent>system:cdap-data-pipeline[6.5.0,7.0.0-SNAPSHOT)</parent>
+            <parent>system:cdap-data-streams[6.5.0,7.0.0-SNAPSHOT)</parent>
           </cdapArtifacts>
         </configuration>
         <executions>
@@ -866,10 +685,106 @@
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>hub-release-archive</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptor>src/main/assembly/config.xml</descriptor>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>target/${project.artifactId}-${project.version}.json</file>
+                  <type>json</type>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <configuration>
+          <!-- Prevent gpg from using pinentry programs -->
+          <gpgArguments>
+            <arg>--pinentry-mode</arg>
+            <arg>loopback</arg>
+          </gpgArguments>
+        </configuration>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+
+          </execution>
+        </executions>
+      </plugin>
+
+
+
     </plugins>
   </build>
 
@@ -884,42 +799,68 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
             <version>2.2.1</version>
-            <configuration>
-              <excludeResources>true</excludeResources>
-            </configuration>
             <executions>
               <execution>
                 <id>attach-sources</id>
-                <phase>package</phase>
                 <goals>
                   <goal>jar-no-fork</goal>
                 </goals>
               </execution>
             </executions>
           </plugin>
-
-          <!-- Javadoc jar -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
             <version>2.9.1</version>
             <configuration>
               <additionalparam>-Xdoclint:none</additionalparam>
-              <links>
-                <link>http://download.oracle.com/javase/${jee.version}/docs/api/</link>
-              </links>
-              <doctitle>${project.name} ${project.version}</doctitle>
-              <bottom>
-                <![CDATA[Copyright &#169; {currentYear} <a href="http://cdap.io" target="_blank">CDAP</a> Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License, Version 2.0</a>.]]>
-              </bottom>
             </configuration>
             <executions>
               <execution>
-                <id>attach-javadoc</id>
-                <phase>package</phase>
+                <id>attach-javadocs</id>
                 <goals>
                   <goal>jar</goal>
                 </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>hub-release-archive</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <configuration>
+                  <descriptor>src/main/assembly/config.xml</descriptor>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+              <execution>
+                <id>attach-artifacts</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>attach-artifact</goal>
+                </goals>
+                <configuration>
+                  <artifacts>
+                    <artifact>
+                      <file>target/${project.artifactId}-${project.version}.json</file>
+                      <type>json</type>
+                    </artifact>
+                  </artifacts>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -963,11 +904,12 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.2</version>
+            <version>1.6.8</version>
             <extensions>true</extensions>
             <configuration>
-              <nexusUrl>https://oss.sonatype.org</nexusUrl>
-              <serverId>sonatype.release</serverId>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
             </configuration>
           </plugin>
         </plugins>
@@ -990,112 +932,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-
-    <profile>
-      <id>e2e-tests</id>
-      <properties>
-        <testSourceLocation>src/e2e-test/java</testSourceLocation>
-      </properties>
-      <build>
-        <testResources>
-          <testResource>
-            <directory>src/e2e-test/resources</directory>
-          </testResource>
-        </testResources>
-      <plugins>
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.18.1</version>
-        <configuration>
-          <skipTests>true</skipTests>
-        </configuration>
-        </plugin>
-
-        <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M5</version>
-        <configuration>
-          <includes>
-            <include>TestRunner.java</include>
-          </includes>
-          <!--Start configuration to run TestRunners in parallel-->
-          <parallel>classes</parallel> <!--Running TestRunner classes in parallel-->
-          <threadCount>2</threadCount> <!--Number of classes to run in parallel-->
-          <forkCount>2</forkCount> <!--Number of JVM processes -->
-          <reuseForks>true</reuseForks>
-          <!--End configuration to run TestRunners in parallel-->
-          <environmentVariables>
-            <GOOGLE_APPLICATION_CREDENTIALS>
-              ${GOOGLE_APPLICATION_CREDENTIALS}
-            </GOOGLE_APPLICATION_CREDENTIALS>
-            <SERVICE_ACCOUNT_TYPE>
-              ${SERVICE_ACCOUNT_TYPE}
-            </SERVICE_ACCOUNT_TYPE>
-            <SERVICE_ACCOUNT_FILE_PATH>
-              ${SERVICE_ACCOUNT_FILE_PATH}
-            </SERVICE_ACCOUNT_FILE_PATH>
-            <SERVICE_ACCOUNT_JSON>
-              ${SERVICE_ACCOUNT_JSON}
-            </SERVICE_ACCOUNT_JSON>
-          </environmentVariables>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
-          </execution>
-        </executions>
-        </plugin>
-
-        <plugin>
-        <groupId>net.masterthought</groupId>
-        <artifactId>maven-cucumber-reporting</artifactId>
-        <version>5.5.0</version>
-
-        <executions>
-          <execution>
-            <id>execution</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <projectName>Cucumber Reports</projectName> <!-- Replace with project name -->
-              <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
-              <buildNumber>1</buildNumber>
-              <skip>false</skip>
-              <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
-              <jsonFiles> <!-- supports wildcard or name pattern -->
-                <param>**/*.json</param>
-              </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
-              <classificationDirectory>${project.build.directory}/cucumber-reports</classificationDirectory>
-              <checkBuildResult>true</checkBuildResult>
-            </configuration>
-          </execution>
-        </executions>
-        </plugin>
-      </plugins>
-      </build>
-
-      <dependencies>
-        <dependency>
-          <groupId>io.cdap.tests.e2e</groupId>
-          <artifactId>cdap-e2e-framework</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-          <version>1.2.8</version>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>
-
     </profile>
   </profiles>
 </project>
