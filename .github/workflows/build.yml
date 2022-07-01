@@ -23,7 +23,7 @@ on:
 
 jobs:
   build:
-    runs-on: k8s-runner-build
+    runs-on: ubuntu-latest
 
     if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
 
@@ -58,3 +58,8 @@ jobs:
           # GITHUB_TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.event.workflow_run.head_sha }}
+
+  send-to-maven-staging-release-branch:
+    needs: build
+    if: ${{ startsWith(github.ref_name, 'release/') }}
+    uses: ./.github/workflows/release.yml
