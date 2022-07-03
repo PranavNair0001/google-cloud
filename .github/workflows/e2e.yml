@@ -115,4 +115,6 @@ jobs:
     needs: get-commit-job
     if: ${{ (github.ref_name == 'develop') && (needs.get-commit-job.outputs.build-hash == needs.get-commit-job.outputs.current-hash) }}
     uses: ./.github/workflows/release.yml
+    with:
+      branch: develop
 
