@@ -58,11 +58,10 @@ jobs:
           # GITHUB_TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.event.workflow_run.head_sha }}
-      - name: View Branch Name
-        run: echo ${{ github.event.workflow_run.head_branch }}
 
   send-to-maven-staging-release-branch:
     needs: build
     if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
-    uses: PranavNair0001/google-cloud/.github/workflows/release.yml@${{github.event.workflow_run.head_branch}}
-
+    uses: ./.github/workflows/release.yml
+    with:
+      branch: ${{ github.event.workflow_run.head_branch }}
