@@ -58,6 +58,8 @@ jobs:
           # GITHUB_TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.event.workflow_run.head_sha }}
+      - name: View Branch Name
+        run: echo ${{ github.ref_name }}
 
   send-to-maven-staging-release-branch:
     needs: build
