@@ -65,4 +65,3 @@ jobs:
     needs: build
     if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
     uses: ./.github/workflows/release.yml
-
