@@ -64,5 +64,5 @@ jobs:
   send-to-maven-staging-release-branch:
     needs: build
     if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
-    uses: PranavNair0001/google-cloud/.github/workflows/release.yml@${{ github.event.workflow_run.head_branch }}
+    uses: PranavNair0001/google-cloud/.github/workflows/release.yml@${{github.event.workflow_run.head_branch}}
 
