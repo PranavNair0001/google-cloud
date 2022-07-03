@@ -794,6 +794,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.14.1</version>
         <configuration>
+          <testFailureIgnore>true</testFailureIgnore>
           <argLine>-Xmx512m</argLine>
           <systemPropertyVariables>
             <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
@@ -1010,6 +1011,7 @@
         <version>2.18.1</version>
         <configuration>
           <skipTests>true</skipTests>
+          <testFailureIgnore>true</testFailureIgnore>
         </configuration>
         </plugin>
 
