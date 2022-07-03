@@ -17,9 +17,9 @@ name: Build with unit tests
 on:
   workflow_run:
     workflows:
-      - Trigger build
+    - Trigger build
     types:
-      - completed
+    - completed
 
 jobs:
   build:
@@ -28,40 +28,40 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
 
     steps:
-      # Pinned 1.0.0 version
-      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
-      - uses: actions/checkout@v2.3.4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-      - name: Cache
-        uses: actions/cache@v2.1.3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-${{ github.workflow }}
-      - name: Build with Maven
-        run: mvn clean test -fae -T 2 -B -V -DcloudBuild -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=25
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v2.2.2
-        if: always()
-        with:
-          name: Build debug files
-          path: |
-            **/target/rat.txt
-            **/target/surefire-reports/*
-      - name: Surefire Report
-        # Pinned 1.0.5 version
-        uses: ScaCap/action-surefire-report@ad808943e6bfbd2e6acba7c53fdb5c89534da533
-        if: always()
-        with:
-          # GITHUB_TOKEN
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{ github.event.workflow_run.head_sha }}
-      - name: View Branch Name
-        run: echo ${{ github.event.workflow_run.head_branch }}
+    # Pinned 1.0.0 version
+    - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
+    - uses: actions/checkout@v2.3.4
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
+    - name: Cache
+      uses: actions/cache@v2.1.3
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-${{ github.workflow }}
+    - name: Build with Maven
+      run: mvn clean test -fae -T 2 -B -V -DcloudBuild -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=25
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v2.2.2
+      if: always()
+      with:
+        name: Build debug files
+        path: |
+          **/target/rat.txt
+          **/target/surefire-reports/*
+    - name: Surefire Report
+      # Pinned 1.0.5 version
+      uses: ScaCap/action-surefire-report@ad808943e6bfbd2e6acba7c53fdb5c89534da533
+      if: always()
+      with:
+        # GITHUB_TOKEN
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit: ${{ github.event.workflow_run.head_sha }}
+    - name: View Branch Name
+      run: echo ${{ github.event.workflow_run.head_branch }}
 
   send-to-maven-staging-release-branch:
     needs: build
     if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
-    uses: ./.github/workflows/release.yml
+    uses: PranavNair0001/google-cloud/.github/workflows/release.yml@${{ github.event.workflow_run.head_branch }}
