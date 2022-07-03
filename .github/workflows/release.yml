@@ -18,8 +18,11 @@ jobs:
       with:
         java-version: 1.8
 
+    - name: Remove previous fails
+      run: find ~/.m2  -name "*.lastUpdated" -exec grep -q "Could not transfer" {} \; -print -exec rm {} \;
+
     - name: Build with Maven
-      run: mvn -nsu -B package --file pom.xml
+      run: mvn -B package --file pom.xml
 
     - name: Set up Apache Maven Central
       uses: actions/setup-java@v1
