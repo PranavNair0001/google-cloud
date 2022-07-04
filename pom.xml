@@ -15,7 +15,7 @@
   ~ the License.
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.PranavNair0001</groupId>
@@ -795,7 +795,7 @@
         <version>2.14.1</version>
         <configuration>
           <testFailureIgnore>true</testFailureIgnore>
-          <argLine>-Xmx512m</argLine>
+          <argLine>-Xmx1024m</argLine>
           <systemPropertyVariables>
             <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
           </systemPropertyVariables>
@@ -828,6 +828,7 @@
               com.google.cloud.spark.bigquery.*;
             </_exportcontents>
           </instructions>
+          <argLine>-Xmx1024m</argLine>
         </configuration>
         <executions>
           <execution>
@@ -1004,83 +1005,83 @@
             <directory>src/e2e-test/resources</directory>
           </testResource>
         </testResources>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.18.1</version>
+      <plugins>
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18.1</version>
+        <configuration>
+          <skipTests>true</skipTests>
+          <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+        </plugin>
+
+        <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <includes>
+            <include>TestRunner.java</include>
+          </includes>
+          <!--Start configuration to run TestRunners in parallel-->
+          <parallel>classes</parallel> <!--Running TestRunner classes in parallel-->
+          <threadCount>2</threadCount> <!--Number of classes to run in parallel-->
+          <forkCount>2</forkCount> <!--Number of JVM processes -->
+          <reuseForks>true</reuseForks>
+          <!--End configuration to run TestRunners in parallel-->
+          <environmentVariables>
+            <GOOGLE_APPLICATION_CREDENTIALS>
+              ${GOOGLE_APPLICATION_CREDENTIALS}
+            </GOOGLE_APPLICATION_CREDENTIALS>
+            <SERVICE_ACCOUNT_TYPE>
+              ${SERVICE_ACCOUNT_TYPE}
+            </SERVICE_ACCOUNT_TYPE>
+            <SERVICE_ACCOUNT_FILE_PATH>
+              ${SERVICE_ACCOUNT_FILE_PATH}
+            </SERVICE_ACCOUNT_FILE_PATH>
+            <SERVICE_ACCOUNT_JSON>
+              ${SERVICE_ACCOUNT_JSON}
+            </SERVICE_ACCOUNT_JSON>
+          </environmentVariables>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+        </executions>
+        </plugin>
+
+        <plugin>
+        <groupId>net.masterthought</groupId>
+        <artifactId>maven-cucumber-reporting</artifactId>
+        <version>5.5.0</version>
+
+        <executions>
+          <execution>
+            <id>execution</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
             <configuration>
-              <skipTests>true</skipTests>
-              <testFailureIgnore>true</testFailureIgnore>
+              <projectName>Cucumber Reports</projectName> <!-- Replace with project name -->
+              <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
+              <buildNumber>1</buildNumber>
+              <skip>false</skip>
+              <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
+              <jsonFiles> <!-- supports wildcard or name pattern -->
+                <param>**/*.json</param>
+              </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
+              <classificationDirectory>${project.build.directory}/cucumber-reports</classificationDirectory>
+              <checkBuildResult>true</checkBuildResult>
             </configuration>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-            <version>3.0.0-M5</version>
-            <configuration>
-              <includes>
-                <include>TestRunner.java</include>
-              </includes>
-              <!--Start configuration to run TestRunners in parallel-->
-              <parallel>classes</parallel> <!--Running TestRunner classes in parallel-->
-              <threadCount>2</threadCount> <!--Number of classes to run in parallel-->
-              <forkCount>2</forkCount> <!--Number of JVM processes -->
-              <reuseForks>true</reuseForks>
-              <!--End configuration to run TestRunners in parallel-->
-              <environmentVariables>
-                <GOOGLE_APPLICATION_CREDENTIALS>
-                  ${GOOGLE_APPLICATION_CREDENTIALS}
-                </GOOGLE_APPLICATION_CREDENTIALS>
-                <SERVICE_ACCOUNT_TYPE>
-                  ${SERVICE_ACCOUNT_TYPE}
-                </SERVICE_ACCOUNT_TYPE>
-                <SERVICE_ACCOUNT_FILE_PATH>
-                  ${SERVICE_ACCOUNT_FILE_PATH}
-                </SERVICE_ACCOUNT_FILE_PATH>
-                <SERVICE_ACCOUNT_JSON>
-                  ${SERVICE_ACCOUNT_JSON}
-                </SERVICE_ACCOUNT_JSON>
-              </environmentVariables>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>integration-test</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>net.masterthought</groupId>
-            <artifactId>maven-cucumber-reporting</artifactId>
-            <version>5.5.0</version>
-
-            <executions>
-              <execution>
-                <id>execution</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>generate</goal>
-                </goals>
-                <configuration>
-                  <projectName>Cucumber Reports</projectName> <!-- Replace with project name -->
-                  <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
-                  <buildNumber>1</buildNumber>
-                  <skip>false</skip>
-                  <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
-                  <jsonFiles> <!-- supports wildcard or name pattern -->
-                    <param>**/*.json</param>
-                  </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
-                  <classificationDirectory>${project.build.directory}/cucumber-reports</classificationDirectory>
-                  <checkBuildResult>true</checkBuildResult>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
+          </execution>
+        </executions>
+        </plugin>
+      </plugins>
       </build>
 
       <dependencies>
