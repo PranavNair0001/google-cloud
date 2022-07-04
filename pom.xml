@@ -795,7 +795,7 @@
         <version>2.14.1</version>
         <configuration>
           <testFailureIgnore>true</testFailureIgnore>
-          <argLine>-Xmx512m</argLine>
+          <argLine>-Xmx1024m</argLine>
           <systemPropertyVariables>
             <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
           </systemPropertyVariables>
@@ -828,6 +828,7 @@
               com.google.cloud.spark.bigquery.*;
             </_exportcontents>
           </instructions>
+          <argLine>-Xmx1024m</argLine>
         </configuration>
         <executions>
           <execution>
