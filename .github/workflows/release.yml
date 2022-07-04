@@ -17,28 +17,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-        
-    - name: Cache
-      uses: actions/cache@v2.1.3
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-${{ github.workflow }}
           
     - name: Set up Maven
       uses: stCarolas/setup-maven@v4.4
       with:
         maven-version: 3.6.3
-        
-    - name: Build with Maven
-      run: mvn clean test -fae -T 2 -B -V -DcloudBuild -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=25
-        
-#     - name: Remove previous fails
-#       run: find ~/.m2  -name "*.lastUpdated" -exec grep -q "Could not transfer" {} \; -print -exec rm {} \;
 
-#     - name: Build with Maven
-#       run: mvn -B package --file pom.xml
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
 
     - name: Set up Apache Maven Central
       uses: actions/setup-java@v1
@@ -51,7 +37,7 @@ jobs:
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
     - name: Publish to Apache Maven Central
-      run: mvn -DskipTests clean deploy -fae -T 2 -B -V -DcloudBuild -Dmaven.wagon.http.retryHandler.count=3 -Dmaven.wagon.httpconnectionManager.ttlSeconds=25 -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
+      run: mvn -DskipTests clean deploy -Dgpg.passphrase=${{ secrets.MAVEN_GPG_PASSPHRASE }}
       env:
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
