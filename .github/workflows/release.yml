@@ -28,6 +28,8 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+      env:
+        MAVEN_OPTS: '-Xmx3200m'
 
     - name: Set up Apache Maven Central
       uses: actions/setup-java@v1
@@ -45,3 +47,4 @@ jobs:
         OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
         MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        MAVEN_OPTS: '-Xmx3200m'
