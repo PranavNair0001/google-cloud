@@ -23,6 +23,7 @@ on:
 
 jobs:
   build:
+    name: 'Build Job'
     runs-on: ubuntu-latest
 
     if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
@@ -59,10 +60,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.event.workflow_run.head_sha }}
 
-  send-to-maven-staging-release-branch:
-    needs: build
-    if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
-    uses: ./.github/workflows/release.yml
-    with:
-      branch: ${{ github.event.workflow_run.head_branch }}
-    secrets: inherit
+#  send-to-maven-staging-release-branch:
+#    needs: build
+#    if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
+#    uses: ./.github/workflows/release.yml
+#    with:
+#      branch: ${{ github.event.workflow_run.head_branch }}
+#    secrets: inherit
