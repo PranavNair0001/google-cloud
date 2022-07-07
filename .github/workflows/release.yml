@@ -13,30 +13,31 @@ jobs:
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
         ref: ${{ github.sha }}
-        check-name: 'Trigger Job'
+        check-name: 'trigger'
         repo-token: ${{ github.token }}
         wait-interval: 5
         allowed-conclusions: success
-    - name: Wait for trigger.yml to complete successfully
+    - name: Wait for build.yml to complete successfully
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
         ref: ${{ github.sha }}
-        check-name: 'Build Job'
+        check-name: 'build'
         repo-token: ${{ github.token }}
         wait-interval: 10
         allowed-conclusions: success
-    - name: Wait for trigger.yml to complete successfully
+    - name: Wait for e2e.yml to complete successfully
       if: ${{ github.ref_name == 'develop' }}
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
         ref: ${{ github.sha }}
-        check-name: 'e2e Job'
+        check-name: 'e2e'
         repo-token: ${{ github.token }}
         wait-interval: 10
         allowed-conclusions: success
 
   release-job:
     runs-on: ubuntu-latest
+    needs: setup-job
     steps:
     - uses: actions/checkout@v2
       with:
