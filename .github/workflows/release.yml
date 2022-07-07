@@ -17,12 +17,10 @@ jobs:
         repo-token: ${{ github.token }}
         wait-interval: 5
         allowed-conclusions: success
-    - name: Delay for build.yml to trigger
-      run: sleep 30s
     - name: Wait for build.yml to complete successfully
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
-        ref: ${{ github.sha }}
+        ref: 'develop'
         check-name: 'build'
         repo-token: ${{ github.token }}
         wait-interval: 10
