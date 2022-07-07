@@ -77,3 +77,4 @@ jobs:
         OSSRH_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
         MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
         MAVEN_OPTS: '-Xmx3200m'
+
