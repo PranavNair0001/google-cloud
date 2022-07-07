@@ -24,7 +24,7 @@ on:
 
 jobs:
   build:
-    name: 'e2e Job'
+    name: 'e2e'
     runs-on: ubuntu-latest
 
     # We allow builds:
