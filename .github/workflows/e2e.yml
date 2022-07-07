@@ -24,7 +24,8 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    name: 'e2e Job'
+    runs-on: ubuntu-latest
 
     # We allow builds:
     # 1) When triggered manually
@@ -86,35 +87,36 @@ jobs:
           context: Cucumber report
           sha: ${{github.event.pull_request.head.sha || github.sha}}
 
-  get-commit-job:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Pause until other workflows are completed
-      uses: willgarcia/workflow-wait-action@0.1.0
-    - name: Repository Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Get Last Successful Commit Hash of Build Workflow
-      id: last-successful-build-commit
-      uses: PranavNair0001/last-successful-build-action@v2.1
-      with:
-        token: ${{ github.token }}
-        branch: "develop"
-        workflow: "Build Workflow"
-        verify: true
-    - name: Get Commit Hash of current Workflow Run
-      id: current-commit
-      run: echo "::set-output name=sha::${GITHUB_SHA}"
-    outputs:
-      build-hash: ${{ steps.last-successful-build-commit.outputs.sha }}
-      current-hash: ${{ steps.current-commit.outputs.sha }}
-
-  send-to-maven-staging-develop-branch:
-    needs: get-commit-job
-    if: ${{ (github.ref_name == 'develop') && (needs.get-commit-job.outputs.build-hash == needs.get-commit-job.outputs.current-hash) }}
-    uses: ./.github/workflows/release.yml
-    with:
-      branch: develop
-    secrets: inherit
+#  get-commit-job:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#    - name: Pause until other workflows are completed
+#      uses: willgarcia/workflow-wait-action@0.1.0
+#    - name: Repository Checkout
+#      uses: actions/checkout@v2
+#      with:
+#        fetch-depth: 0
+#    - name: Get Last Successful Commit Hash of Build Workflow
+#      id: last-successful-build-commit
+#      uses: PranavNair0001/last-successful-build-action@v2.1
+#      with:
+#        token: ${{ github.token }}
+#        branch: "develop"
+#        workflow: "Build Workflow"
+#        verify: true
+#    - name: Get Commit Hash of current Workflow Run
+#      id: current-commit
+#      run: echo "::set-output name=sha::${GITHUB_SHA}"
+#    outputs:
+#      build-hash: ${{ steps.last-successful-build-commit.outputs.sha }}
+#      current-hash: ${{ steps.current-commit.outputs.sha }}
+#
+#  send-to-maven-staging-develop-branch:
+#    needs: get-commit-job
+#    if: ${{ (github.ref_name == 'develop') && (needs.get-commit-job.outputs.build-hash == needs.get-commit-job.outputs.current-hash) }}
+#    uses: ./.github/workflows/release.yml
+#    with:
+#      branch: develop
+#    secrets: inherit
+#
