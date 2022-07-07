@@ -23,7 +23,7 @@ on:
 
 jobs:
   build:
-    name: 'Build Job'
+    name: 'build'
     runs-on: ubuntu-latest
 
     if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
