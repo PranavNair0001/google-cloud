@@ -26,6 +26,7 @@ on:
 
 jobs:
   trigger:
+    name: 'trigger'
     runs-on: ubuntu-latest
 
     # We allow builds:
