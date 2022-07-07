@@ -1,18 +1,46 @@
 name: release-to-maven-central-staging
-on: 
-  workflow_call: 
-    inputs: 
-      branch:
-        required: true
-        type: string
-        
+on:
+  push:
+    branches:
+    - develop
+    - 'release/**'
+
 jobs:
+  setup-job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Wait for trigger.yml to complete successfully
+      uses: lewagon/wait-on-check-action@v1.0.0
+      with:
+        ref: ${{ github.sha }}
+        check-name: 'Trigger Job'
+        repo-token: ${{ github.token }}
+        wait-interval: 5
+        allowed-conclusions: success
+    - name: Wait for trigger.yml to complete successfully
+      uses: lewagon/wait-on-check-action@v1.0.0
+      with:
+        ref: ${{ github.sha }}
+        check-name: 'Build Job'
+        repo-token: ${{ github.token }}
+        wait-interval: 10
+        allowed-conclusions: success
+    - name: Wait for trigger.yml to complete successfully
+      if: ${{ github.ref_name == 'develop' }}
+      uses: lewagon/wait-on-check-action@v1.0.0
+      with:
+        ref: ${{ github.sha }}
+        check-name: 'e2e Job'
+        repo-token: ${{ github.token }}
+        wait-interval: 10
+        allowed-conclusions: success
+
   release-job:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: ${{ inputs.branch }}
+        ref: ${{ github.sha }}
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
