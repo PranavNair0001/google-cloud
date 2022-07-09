@@ -60,10 +60,16 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit: ${{ github.event.workflow_run.head_sha }}
 
-#  send-to-maven-staging-release-branch:
-#    needs: build
-#    if: ${{ startsWith(github.event.workflow_run.head_branch, 'release/') }}
-#    uses: ./.github/workflows/release.yml
-#    with:
-#      branch: ${{ github.event.workflow_run.head_branch }}
-#    secrets: inherit
+  wait-for-e2e-develop-branch:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event.workflow_run.head_branch == 'develop' }}
+    steps:
+    - name: Wait for e2e.yml to complete successfully
+      uses: lewagon/wait-on-check-action@v1.0.0
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
+        check-name: 'e2e'
+        repo-token: ${{ github.token }}
+        wait-interval: 10
+        allowed-conclusions: success
