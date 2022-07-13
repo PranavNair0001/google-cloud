@@ -23,24 +23,13 @@ on:
     - completed
 
 jobs:
-  status-update:
+  commit-status-update-and-wait:
     if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
     runs-on: ubuntu-latest
     steps:
     - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
-
-  build-job:
-    needs: status-update
-    uses: ./.github/workflows/build.yml
-    with:
-      ref: ${{ github.event.workflow_run.head_sha }}
-
-  wait:
-    needs: build-job
-    if: ${{ github.event.workflow_run.head_branch == 'develop' }}
-    runs-on: ubuntu-latest
-    steps:
     - name: Wait for e2e.yml to complete successfully
+      if: ${{ github.event.workflow_run.head_branch == 'develop' }}
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
         ref: ${{ github.event.workflow_run.head_sha }}
@@ -49,9 +38,16 @@ jobs:
         wait-interval: 10
         allowed-conclusions: success
 
+  build-job:
+    needs: status-update
+    uses: ./.github/workflows/build.yml
+    with:
+      ref: ${{ github.event.workflow_run.head_sha }}
+
+
   release-workflow:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' }}
-    needs: wait
+    if: ${{ github.event.workflow_run.event == 'push' }}
+    needs: build-job
     uses: ./.github/workflows/release.yml
     with:
       ref: ${{ github.event.workflow_run.head_sha }}
