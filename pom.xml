@@ -20,7 +20,7 @@
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.21.0-SNAPSHOT</version>
+  <version>0.19.0.25-SNAPSHOT</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -58,11 +58,11 @@
   <distributionManagement>
     <repository>
       <id>sonatype.release</id>
-      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
     <snapshotRepository>
       <id>sonatype.snapshots</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
@@ -120,7 +120,7 @@
   <repositories>
     <repository>
       <id>sonatype</id>
-      <url>https://s01.oss.sonatype.org/content/groups/public</url>
+      <url>https://oss.sonatype.org/content/groups/public</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -130,7 +130,7 @@
     </repository>
     <repository>
       <id>sonatype-snapshots</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -828,7 +828,6 @@
               com.google.cloud.spark.bigquery.*;
             </_exportcontents>
           </instructions>
-          <argLine>-Xmx1024m</argLine>
         </configuration>
         <executions>
           <execution>
