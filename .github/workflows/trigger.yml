@@ -9,9 +9,9 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-# This workflow will trigger build.yml only when needed.
+# This workflow will trigger deploy.yml only when needed.
 # This way we don't flood main workflow run list
-# Note that build.yml from develop will be used even for PR builds
+# Note that deploy.yml from develop will be used even for PR builds
 # Also it will have access to the proper GITHUB_SECRET
 
 name: Trigger build
