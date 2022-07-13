@@ -9,6 +9,7 @@ jobs:
 
   release-job:
     runs-on: self-hosted
+    needs: build-job
     steps:
     - name: Get Secrets from GCP Secret Manager
       id: 'secrets'
