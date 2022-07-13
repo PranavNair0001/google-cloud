@@ -27,7 +27,7 @@ jobs:
     name: 'build'
     runs-on: ubuntu-latest
 
-    if: ${{github.event_name == 'workflow_call' ||  github.event.workflow_run.conclusion != 'skipped' }}
+    if: ${{github.event_name == 'workflow_call' ||  (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'skipped') }}
 
     steps:
       # Pinned 1.0.0 version
@@ -74,3 +74,11 @@ jobs:
         repo-token: ${{ github.token }}
         wait-interval: 10
         allowed-conclusions: success
+  
+  release-workflow:
+    if: ${{ github.event_name == 'workflow_run' }}
+    needs: wait-for-e2e-develop-branch
+    uses: ./.github/workflows/release.yml
+    with:
+      ref: ${{ github.event.workflow_run.head_sha }}
+    secrets: inherit
