@@ -37,10 +37,10 @@ jobs:
 
   wait:
     needs: build-job
+    if: ${{ github.event.workflow_run.head_branch == 'develop' }}
     runs-on: ubuntu-latest
     steps:
     - name: Wait for e2e.yml to complete successfully
-      if: ${{ github.event.workflow_run.head_branch == 'develop' }}
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
         ref: ${{ github.event.workflow_run.head_sha }}
