@@ -53,9 +53,10 @@ jobs:
         gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
     - name: Publish to Apache Maven Central
-      run: mvn -DskipTests clean deploy -Dgpg.passphrase=${{ steps.secrets.outputs.MAVEN_GPG_PASSPHRASE }}
+      run: mvn -DskipTests clean deploy -Dgpg.passphrase=$MAVEN_GPG_PASSPHRASE
       env:
         OSSRH_USERNAME: ${{ steps.secrets.outputs.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ steps.secrets.outputs.OSSRH_TOKEN }}
         MAVEN_GPG_PASSPHRASE: ${{ steps.secrets.outputs.MAVEN_GPG_PASSPHRASE }}
         MAVEN_OPTS: '-Xmx3200m'
+
