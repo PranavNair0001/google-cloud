@@ -34,7 +34,7 @@ jobs:
       - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
       - uses: actions/checkout@v2.3.4
         with:
-          ref: ${{((github.event_name == 'workflow_run')?github.event.workflow_run.head_sha:github.sha) }}
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
       - name: Cache
         uses: actions/cache@v2.1.3
         with:
@@ -59,7 +59,7 @@ jobs:
         with:
           # GITHUB_TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{((github.event_name == 'workflow_run')?github.event.workflow_run.head_sha:github.sha) }}
+          commit: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
   wait-for-e2e-develop-branch:
     runs-on: ubuntu-latest
