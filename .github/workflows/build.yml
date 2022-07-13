@@ -59,13 +59,8 @@ jobs:
         # GITHUB_TOKEN
         github_token: ${{ secrets.GITHUB_TOKEN }}
         commit: ${{ github.event.workflow_run.head_sha }}
-
-  wait-for-e2e-develop-branch:
-    runs-on: ubuntu-latest
-    needs: build
-    if: ${{ github.event.workflow_run.head_branch == 'develop' }}
-    steps:
     - name: Wait for e2e.yml to complete successfully
+      if: ${{ github.event.workflow_run.head_branch == 'develop' }}
       uses: lewagon/wait-on-check-action@v1.0.0
       with:
         ref: ${{ github.event.workflow_run.head_sha }}
@@ -73,10 +68,10 @@ jobs:
         repo-token: ${{ github.token }}
         wait-interval: 10
         allowed-conclusions: success
-
+    
   release-workflow:
-    if: ${{ github.event_name == 'workflow_run' }}
-    needs: wait-for-e2e-develop-branch
+#    if: ${{ github.event_name == 'workflow_run' }}
+    needs: build
     uses: ./.github/workflows/release.yml
     with:
       ref: ${{ github.event.workflow_run.head_sha }}
