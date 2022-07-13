@@ -23,7 +23,7 @@ on:
     - completed
 
 jobs:
-  build:
+  build-job:
     if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
     uses: ./.github/workflows/build.yml
     with:
