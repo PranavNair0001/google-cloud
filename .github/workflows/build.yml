@@ -15,7 +15,6 @@
 name: Build with unit tests
 
 on:
-  workflow_call:
   workflow_run:
     workflows:
     - Trigger build
@@ -27,14 +26,14 @@ jobs:
     name: 'build'
     runs-on: ubuntu-latest
 
-    if: ${{github.event_name == 'workflow_call' ||  (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'skipped') }}
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
 
     steps:
     # Pinned 1.0.0 version
     - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
     - uses: actions/checkout@v2.3.4
       with:
-        ref: ${{((github.event_name == 'workflow_run')?github.event.workflow_run.head_sha:github.sha) }}
+        ref: ${{ github.event.workflow_run.head_sha }}
     - name: Cache
       uses: actions/cache@v2.1.3
       with:
@@ -59,12 +58,12 @@ jobs:
       with:
         # GITHUB_TOKEN
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit: ${{((github.event_name == 'workflow_run')?github.event.workflow_run.head_sha:github.sha) }}
+        commit: ${{ github.event.workflow_run.head_sha }}
 
   wait-for-e2e-develop-branch:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'develop' }}
+    if: ${{ github.event.workflow_run.head_branch == 'develop' }}
     steps:
     - name: Wait for e2e.yml to complete successfully
       uses: lewagon/wait-on-check-action@v1.0.0
