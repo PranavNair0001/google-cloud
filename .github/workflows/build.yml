@@ -71,9 +71,14 @@ jobs:
           repo-token: ${{ github.token }}
           wait-interval: 10
           allowed-conclusions: success
+      - name: Get Maven Project Version
+        id: version
+        run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
+    outputs:
+      version: ${{ steps.version.outputs.version }}
 
   release-maven-staging:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' }}
+    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' && endsWith(needs.build.outputs.version, 'SNAPSHOT') }}
     needs: build
     uses: ./.github/workflows/release.yml
     with:
