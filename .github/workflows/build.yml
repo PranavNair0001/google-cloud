@@ -74,6 +74,7 @@ jobs:
 
   release-maven-staging:
     if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' }}
+    needs: build
     uses: ./.github/workflows/release.yml
     with:
       ref: ${{ github.event.workflow_run.head_sha }}
