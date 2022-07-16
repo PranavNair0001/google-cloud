@@ -37,6 +37,10 @@ jobs:
         repo-token: ${{ github.token }}
         wait-interval: 10
         allowed-conclusions: success
+    - name: Checkout Repository
+      uses: actions/checkout@v2.3.4
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
     - name: Get Maven Project Version
       id: version
       run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
