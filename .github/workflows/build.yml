@@ -16,27 +16,20 @@ name: Build with unit tests
 
 on:
   workflow_call:
-  workflow_run:
-    workflows:
-      - Trigger build
-    types:
-      - completed
+    inputs:
+      ref:
+        required: true
+        type: string
 
 jobs:
   build:
     name: 'build'
     runs-on: ubuntu-latest
 
-    if: ${{github.event_name == 'workflow_call' ||  github.event.workflow_run.conclusion != 'skipped' }}
-
     steps:
-      # Pinned 1.0.0 version
-
-      - if: ${{ github.event_name == 'workflow_run'}}
-        uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
       - uses: actions/checkout@v2.3.4
         with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ inputs.ref }}
       - name: Cache
         uses: actions/cache@v2.1.3
         with:
@@ -61,25 +54,4 @@ jobs:
         with:
           # GITHUB_TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
-      - name: Wait for e2e.yml to complete successfully
-        if: ${{github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'develop' }}
-        uses: lewagon/wait-on-check-action@v1.0.0
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
-          check-name: 'e2e'
-          repo-token: ${{ github.token }}
-          wait-interval: 10
-          allowed-conclusions: success
-      - name: Get Maven Project Version
-        id: version
-        run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-
-  release-maven-staging:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' && endsWith(needs.build.outputs.version, 'SNAPSHOT') }}
-    needs: build
-    uses: ./.github/workflows/release.yml
-    with:
-      ref: ${{ github.event.workflow_run.head_sha }}
+          commit: ${{ inputs.ref }}
