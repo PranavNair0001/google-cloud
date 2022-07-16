@@ -34,9 +34,6 @@ jobs:
       with:
         maven-version: 3.6.3
         
-    - name: Remove failed downloads
-      run: find ~/.m2  -name "*.lastUpdated" -exec grep -q "Could not transfer" {} \; -print -exec rm {} \;
-
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       env:
