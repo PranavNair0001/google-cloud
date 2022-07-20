@@ -20,7 +20,7 @@
 
   <groupId>io.github.PranavNair0001</groupId>
   <artifactId>google-cloud</artifactId>
-  <version>0.19.1.6-SNAPSHOT</version>
+  <version>0.19.1.5-SNAPSHOT</version>
   <name>Google Cloud Plugins</name>
   <packaging>jar</packaging>
   <description>Plugins for Google Big Query</description>
@@ -935,8 +935,6 @@
                 <arg>--pinentry-mode</arg>
                 <arg>loopback</arg>
               </gpgArguments>
-              <passphrase>${gpg.passphrase}</passphrase>
-              <useAgent>${gpg.useagent}</useAgent>
             </configuration>
             <executions>
               <execution>
