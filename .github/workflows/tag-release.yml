@@ -54,7 +54,7 @@ jobs:
 
 
     - name: Publish to Maven Central
-      run: mvn -DskipTests clean deploy -P release -Dgpg.passphrase=$MAVEN_GPG_PASSPHRASE
+      run: mvn -DskipTests clean deploy -P release-snapshot -Dgpg.passphrase=$MAVEN_GPG_PASSPHRASE
       env:
         OSSRH_USERNAME: ${{ steps.secrets.outputs.OSSRH_USERNAME }}
         OSSRH_PASSWORD: ${{ steps.secrets.outputs.OSSRH_TOKEN }}
