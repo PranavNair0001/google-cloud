@@ -15,30 +15,28 @@
 name: Build with unit tests
 
 on:
+  workflow_call:
   workflow_run:
     workflows:
       - Trigger build
     types:
       - completed
-  workflow_call:
-    inputs:
-      ref:
-        required: true
-        type: string
 
 jobs:
   build:
-    runs-on: k8s-runner-build
+    name: 'build'
+    runs-on: ubuntu-latest
 
-
+    if: ${{github.event_name == 'workflow_call' ||  github.event.workflow_run.conclusion != 'skipped' }}
 
     steps:
       # Pinned 1.0.0 version
-      - if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'skipped' }}
+
+      - if: ${{ github.event_name == 'workflow_run'}}
         uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
       - uses: actions/checkout@v2.3.4
         with:
-          ref: ${{ github.event.workflow_run.head_sha || inputs.ref }}
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
       - name: Cache
         uses: actions/cache@v2.1.3
         with:
@@ -63,4 +61,4 @@ jobs:
         with:
           # GITHUB_TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit: ${{ github.event.workflow_run.head_sha || inputs.ref }}
+          commit: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
