@@ -47,16 +47,13 @@ jobs:
       with: # running setup-java again overwrites the settings.xml
         java-version: 1.8
         server-id: ossrh
-        server-username: OSSRH_USERNAME
-        server-password: OSSRH_PASSWORD
-#        gpg-private-key: ${{ steps.secrets.outputs.MAVEN_GPG_PRIVATE_KEY }}
-        gpg-passphrase: MAVEN_GPG_PASSPHRASE
+        server-username: ${{ steps.secrets.outputs.OSSRH_USERNAME }}
+        server-password: ${{ steps.secrets.outputs.OSSRH_TOKEN }}
+        gpg-private-key: ${{ steps.secrets.outputs.MAVEN_GPG_PRIVATE_KEY }}
+        gpg-passphrase: ${{ steps.secrets.outputs.MAVEN_GPG_PASSPHRASE }}
 
 
     - name: Publish to Maven Central
-      run: mvn -DskipTests clean deploy -P release-snapshot -Dgpg.passphrase=$MAVEN_GPG_PASSPHRASE
+      run: mvn -DskipTests clean deploy -P release-snapshot
       env:
-        OSSRH_USERNAME: ${{ steps.secrets.outputs.OSSRH_USERNAME }}
-        OSSRH_PASSWORD: ${{ steps.secrets.outputs.OSSRH_TOKEN }}
-        MAVEN_GPG_PASSPHRASE: ${{ steps.secrets.outputs.MAVEN_GPG_PASSPHRASE }}
         MAVEN_OPTS: '-Xmx3200m'
