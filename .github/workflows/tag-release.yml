@@ -40,13 +40,11 @@ jobs:
 
     - name: Checkout Repository
       uses: actions/checkout@v2
-      with:
-        ref: ${{ inputs.ref }}
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-      env:
-        MAVEN_OPTS: '-Xmx3200m'
+#     - name: Build with Maven
+#       run: mvn -B package --file pom.xml
+#       env:
+#         MAVEN_OPTS: '-Xmx3200m'
 
     - name: Set up Maven Deploy Server in settings.xml
       uses: actions/setup-java@v1
