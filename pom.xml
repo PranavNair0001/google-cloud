@@ -959,8 +959,8 @@
             <version>1.6.2</version>
             <extensions>true</extensions>
             <configuration>
-              <nexusUrl>https://oss.sonatype.org</nexusUrl>
-              <serverId>sonatype.release</serverId>
+              <nexusUrl>https://s01.oss.sonatype.org</nexusUrl>
+              <serverId>ossrh</serverId>
             </configuration>
           </plugin>
         </plugins>
