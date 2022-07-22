@@ -42,11 +42,6 @@ jobs:
       with:
         ref: ${{ inputs.ref }}
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-      env:
-        MAVEN_OPTS: '-Xmx3200m'
-
     - name: Set up Maven Deploy Server in settings.xml
       uses: actions/setup-java@v1
       with: # running setup-java again overwrites the settings.xml
